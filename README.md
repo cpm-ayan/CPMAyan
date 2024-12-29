@@ -1,6 +1,6 @@
-# CPMNuker
-<h3>CPMNuker is a tool made to modify Car Parking Multiplayer accounts with no root or vertual app.</h3>
-<h4>you just need an Access Key, wich you can get from <a href="https://t.me/TheNukerBot">@TheNukerBot</a> for free with 1K Credits Balance.</h4>
+# CPMTool
+<h3>CPMTool is a tool made to modify Car Parking Multiplayer accounts with no root or vertual app.</h3>
+<h4>you just need an Access Key, Get From 966597761240 Whatsapp
 
 ![](./assets/screenshot_1.png)
 
