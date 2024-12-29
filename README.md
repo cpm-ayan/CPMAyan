@@ -14,8 +14,8 @@
 ### Android (Termux):
 - `pkg install git`
 - `pkg install python python-pip`
-- `git clone https://github.com/cpmnuker/cpmnuker.git`
-- `cd cpmnuker`
+- `git clone https://github.com/cpm1tool/cpm1tool.git`
+- `cd cpm1tool`
 - `pip install -r requirements.txt`
 - `python main.py`
 
@@ -23,7 +23,7 @@
 - `apk add git`
 - `apk add python3`
 - `apk add py3-pip`
-- `git clone https://github.com/cpmnuker/cpmnuker.git`
-- `cd cpmnuker`
-- `pip install -r requirements.txt`
+- `git clone https://github.com/cpm1tool/cpm1tool.git`
+- `cd cpm1tool`
+- `pip3 install -r requirements.txt`
 - `python3 main.py`
