@@ -154,7 +154,6 @@ if __name__ == "__main__":
                 print(Colorate.Horizontal(Colors.rainbow, 'INVALID ACCESS KEY.'))
                 sleep(2)
                 continue
-            else: 
             print(Colorate.Horizontal(Colors.rainbow, 'SUCCESSFUL.'))
             sleep(2)
         while True:
