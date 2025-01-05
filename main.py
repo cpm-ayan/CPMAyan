@@ -149,11 +149,6 @@ if __name__ == "__main__":
                 sleep(2)
                 continue
             else:
-                print(Colorate.Horizontal(Colors.rainbow, 'TRY AGAIN.'))
-                print(Colorate.Horizontal(Colors.rainbow, '! Note: make sure you filled out the fields !.'))
-                sleep(2)
-                continue
-        else:
             print(Colorate.Horizontal(Colors.rainbow, 'SUCCESSFUL.'))
             sleep(2)
         while True:
