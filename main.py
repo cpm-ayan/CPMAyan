@@ -11,7 +11,7 @@ from rich.style import Style
 import pystyle
 from pystyle import Colors, Colorate
 
-from cpmewan1999 import CPMEwan1999
+from cpmelsedev import CPMElsedev
 
 __CHANNEL_USERNAME__ = "cpmayan"
 __GROUP_USERNAME__   = "cpmayanchat"
@@ -39,7 +39,7 @@ def gradient_text(text, colors):
 
 def banner(console):
     os.system('cls' if os.name == 'nt' else 'clear')
-    brand_name = figlet_format('CPMANAS', font='drpepper')
+    brand_name =  "Car Parking Multiplayer 1 Tool - WhatsApp 966597761240"
     colors = [
         "rgb(255,0,0)", "rgb(255,69,0)", "rgb(255,140,0)", "rgb(255,215,0)", "rgb(173,255,47)", 
         "rgb(0,255,0)", "rgb(0,255,255)", "rgb(0,191,255)", "rgb(0,0,255)", "rgb(139,0,255)",
@@ -72,7 +72,9 @@ def load_player_data(cpm):
         else:
             print(Colorate.Horizontal(Colors.rainbow, '! ERROR: new accounts most be signed-in to the game at least once !.'))
             exit(1)
-
+    else:
+        print(Colorate.Horizontal(Colors.rainbow, '! ERROR: seems like your login is not properly set !.'))
+        exit(1)
 
 
 def load_key_data(cpm):
@@ -132,7 +134,7 @@ if __name__ == "__main__":
         acc_password = prompt_valid_value("[bold][?] Account Password[/bold]", "Password", password=False)
         acc_access_key = prompt_valid_value("[bold][?] Access Key[/bold]", "Access Key", password=False)
         console.print("[bold cyan][%] Trying to Login[/bold cyan]: ", end=None)
-        cpm = CPMEwan1999(acc_access_key)
+        cpm = CPMElsedev(acc_access_key)
         login_response = cpm.login(acc_email, acc_password)
         if login_response != 0:
             if login_response == 100:
@@ -147,6 +149,12 @@ if __name__ == "__main__":
                 print(Colorate.Horizontal(Colors.rainbow, 'INVALID ACCESS KEY.'))
                 sleep(2)
                 continue
+            else:
+                print(Colorate.Horizontal(Colors.rainbow, 'TRY AGAIN.'))
+                print(Colorate.Horizontal(Colors.rainbow, '! Note: make sure you filled out the fields !.'))
+                sleep(2)
+                continue
+        else:
             print(Colorate.Horizontal(Colors.rainbow, 'SUCCESSFUL.'))
             sleep(2)
         while True:
@@ -163,7 +171,7 @@ if __name__ == "__main__":
             print(Colorate.Horizontal(Colors.rainbow, '{06}: Change Name (Rainbow)    1.00'))
             print(Colorate.Horizontal(Colors.rainbow, '{07}: Number Plates            2.000K'))
             print(Colorate.Horizontal(Colors.rainbow, '{08}: Account Delete           FREE'))
-            print(Colorate.Horizontal(Colors.rainbow, '{09}: ccount Register          FREE'))
+            print(Colorate.Horizontal(Colors.rainbow, '{09}: Account Register         FREE'))
             print(Colorate.Horizontal(Colors.rainbow, '{10}: Delete Friends           5.00'))
             print(Colorate.Horizontal(Colors.rainbow, '{11}: Unlock Paid Cars         4.000K'))
             print(Colorate.Horizontal(Colors.rainbow, '{12}: Unlock all Cars          3.000K'))
@@ -339,7 +347,7 @@ if __name__ == "__main__":
                 if status == 0:
                     print(Colorate.Horizontal(Colors.rainbow, 'SUCCESSFUL'))
                     print(Colorate.Horizontal(Colors.rainbow, '======================================'))
-                    print(Colorate.Horizontal(Colors.rainbow, f'INFO: In order to tweak this account with Ewan_Kurdish.'))
+                    print(Colorate.Horizontal(Colors.rainbow, f'INFO: In order to tweak this account with CPMElsedev.'))
                     print(Colorate.Horizontal(Colors.rainbow, 'you most sign-in to the game using this account.'))
                     sleep(2)
                     continue
