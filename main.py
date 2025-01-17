@@ -34,6 +34,7 @@ def banner(console):
     try:
         os.system('cls' if os.name=='nt' else 'clear')
     except:
+        console.clear()
     console.print("[bold green][*] Description[/bold green]: Car Parking Multiplayer Hacking Tool.")
     console.print("[bold red]==================================================[/bold red]")
     console.print("[bold yellow][!] Note[/bold yellow]: Logout from CPM before using this tool !.", end="\n\n")
