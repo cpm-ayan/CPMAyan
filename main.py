@@ -35,6 +35,7 @@ def banner(console):
         os.system('cls' if os.name=='nt' else 'clear')
     except:
         console.clear()
+        console.print("[bold green][*] How to Buy[/bold green]: Buy An Access Key From +971 56 723 3038.")
     console.print("[bold green][*] Description[/bold green]: Car Parking Multiplayer Hacking Tool.")
     console.print("[bold red]==================================================[/bold red]")
     console.print("[bold yellow][!] Note[/bold yellow]: Logout from CPM before using this tool !.", end="\n\n")
