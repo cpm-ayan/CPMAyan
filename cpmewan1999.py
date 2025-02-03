@@ -1,6 +1,6 @@
 import requests
 from time import sleep
-BASE_URL: str = "https://www.cpmewan1999.cpmewan.com/api"
+BASE_URL: str = "https://cpmewan1999.cpmewan.com/api"
 
 
 class CPMEwan1999:
@@ -262,4 +262,4 @@ class CPMEwan1999:
             f"{BASE_URL}/hack_car_milage", params=params, data=payload
         )
         response_decoded = response.json()
-        return response_decoded.get("ok")                                
+        return response_decoded.get("ok")
