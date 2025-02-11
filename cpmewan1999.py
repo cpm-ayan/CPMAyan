@@ -1,6 +1,6 @@
 import requests
 from time import sleep
-BASE_URL: str = "https://cpmewan1999.cpmewan.com/api"
+__ENDPOINT_URL__: str = "https://telmunnshop.squareweb.app/api"
 
 
 class CPMEwan1999:
