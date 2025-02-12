@@ -1809,7 +1809,7 @@ if __name__ == "__main__":
                     continue                    
             else: continue
             break
-        break:
+        break
     debug_mode = False
 CURRENT_VERSION = """
 2.6.2
