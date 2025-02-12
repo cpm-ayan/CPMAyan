@@ -170,7 +170,7 @@ import datetime
 
 
 
-from cpmewan1999 import CPMEwan1999
+from cpmtooldev import CPMTooldev
 
 __CHANNEL_USERNAME__ = "cp_ayan"
 __GROUP_USERNAME__   = "cp_ayan_chat"
@@ -286,7 +286,7 @@ if __name__ == "__main__":
         acc_password = prompt_valid_value("[?] ACCOUNT PASSWORD", "Password", password=False)
         acc_access_key = prompt_valid_value("[?] ACCESS KEY", "Access Key", password=False)
         console.print("[%] TRYING TO LOGIN: ", end=None)
-        cpm = CPMEwan1999(acc_access_key)
+        cpm = CPMTooldev(acc_access_key)
         login_response = cpm.login(acc_email, acc_password)
         if login_response != 0:
             if login_response == 100:
