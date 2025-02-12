@@ -161,6 +161,7 @@ import requests
 from time import sleep
 import os, signal, sys
 from rich.console import Console
+from pyfiglet import figlet_format
 from rich.prompt import Prompt, IntPrompt
 from rich.text import Text
 from rich.style import Style
