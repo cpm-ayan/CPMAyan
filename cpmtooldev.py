@@ -1,6 +1,6 @@
 import requests
 
-__ENDPOINT_URL__: str = "cpmayandev.squareweb.app/api"
+__ENDPOINT_URL__: str = "https://cpmayan.squareweb.app/api"
 
 class CPMTooldev:
     def __init__(self, access_key) -> None:
