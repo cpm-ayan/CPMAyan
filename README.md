@@ -1,7 +1,7 @@
 # CPMAyan
 
 <h3>CPMAyan is a tool made to modify Car Parking Multiplayer accounts with no root or vertual app.</h3>
-<h4>you just need an Access Key, wich you can get from <a href="">@cpmayanbot</a> for free with 1K Credits Balance.</h4>
+<h4>you just need an Access Key, which you can get from <a href="">@cpmayanbot</a> for free with 1K Credits Balance.</h4>
 
 ![](./Screenshot_20250214_172434.png)
 
@@ -18,8 +18,8 @@
 
 - `pkg install git`
 - `pkg install python python-pip`
-- `git clone https://github.com/cpm1tool/cpm1tool.git`
-- `cd cpm1tool`
+- `git clone https://github.com/cpmayano/CPMAyan.git`
+- `cd CPMAyan`
 - `pip install -r requirements.txt`
 - `python main.py`
 
@@ -28,7 +28,7 @@
 - `apk add git`
 - `apk add python3`
 - `apk add py3-pip`
-- `git clone https://github.com/cpm1tool/cpm1tool.git`
-- `cd cpm1tool`
+- `git clone https://github.com/cpmayano/CPMAyan.git`
+- `cd CPMAyan`
 - `pip install -r requirements.txt`
 - `python3 main.py`
