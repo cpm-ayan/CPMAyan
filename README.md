@@ -3,7 +3,7 @@
 <h3>CPMAyan is a tool made to modify Car Parking Multiplayer accounts with no root or vertual app.</h3>
 <h4>you just need an Access Key, which you can get from <a href="">@cpmayanbot</a> for free with 1K Credits Balance.</h4>
 
-![](./Screenshot_20250214_172434.png)
+![]
 
 #### Tested on:
 
