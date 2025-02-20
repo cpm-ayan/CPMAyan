@@ -92,7 +92,7 @@ except Exception as e:
     from pystyle import System as pySystem
     
 #text = """
-#< [ Telegram Ewan_Ali ] > X < [ TikTok Ewan.Shex.Ali ] >"""[1:]
+#< [ Telegram @ayanhere09 ] > X < [ TikTok no ] >"""[1:]
 
 
 banner = r"""
@@ -166,10 +166,10 @@ import datetime
 
 
 
-from cpmewan1999profile import CPMEwan1999profilenot
+from cpmayan import CPMAyan
 
-__CHANNEL_USERNAME__ = "channel"
-__GROUP_USERNAME__   = "group"
+__CHANNEL_USERNAME__ = "CP_Ayan"
+__GROUP_USERNAME__   = "CP_Ayan_Chat"
 
 def signal_handler(sig, frame):
     print("\n Bye Bye...")
@@ -287,7 +287,7 @@ if __name__ == "__main__":
         acc_password = prompt_valid_value("[?] ACCOUNT PASSWORD", "Password", password=False)
         acc_access_key = prompt_valid_value("[?] ACCESS KEY", "Access Key", password=False)
         console.print("[%] TRYING TO LOGIN: ", end=None)
-        cpm = CPMEwan1999(acc_access_key)
+        cpm = CPMAyan(acc_access_key)
         login_response = cpm.login(acc_email, acc_password)
         if login_response != 0:
             if login_response == 100:
