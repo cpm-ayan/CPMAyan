@@ -12,7 +12,7 @@ from rich.console import Console
 from rich.prompt import Prompt, IntPrompt
 from rich.text import Text
 from rich.style import Style
-from cpmnuker import CPMNuker
+from cpmayan import CPMAyan
 
 __CHANNEL_USERNAME__ = "CP_Ayan"
 __GROUP_USERNAME__   = "CP_Ayan_Chat"
