@@ -230,7 +230,7 @@ if __name__ == "__main__":
                     sleep(2)
                     continue
             elif service == 3:  # King Rank
-    console.print("[bold red][!] Note:[/bold red]: if the king rank doesn't appear in game, close it and open few times.", end=None)
+    console.print("[bold red][!] Note:[/bold red]: if the king rank doesn't appear in game, close it and open few times.",
     console.print("[bold red][!] Note:[/bold red]: please don't do King Rank on same account twice.", end=None)
     sleep(2)
     console.print("[bold cyan][%] Giving you a King Rank[/bold cyan]: ", end=None)
