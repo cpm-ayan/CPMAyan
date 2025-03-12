@@ -1,8 +1,8 @@
 import requests
 
-__ENDPOINT_URL__: str = "https://ayandev.squareweb.app/api"
+__ENDPOINT_URL__: str = "https://testers.squareweb.app/api"
 
-class AyanDev:
+class CPMTooldev:
     def __init__(self, access_key) -> None:
         self.auth_token = None
         self.access_key = access_key
@@ -254,5 +254,27 @@ class AyanDev:
         }
         params = {"key": self.access_key}
         response = requests.post(f"{__ENDPOINT_URL__}/max_max2", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+        
+    def millage_car(self, car_id, custom):
+        payload = {
+        "account_auth": self.auth_token,
+        "car_id": car_id,
+        "custom": custom,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(f"{__ENDPOINT_URL__}/millage_car", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def brake_car(self, car_id, custom):
+        payload = {
+        "account_auth": self.auth_token,
+        "car_id": car_id,
+        "custom": custom,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(f"{__ENDPOINT_URL__}/brake_car", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
