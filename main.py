@@ -11,7 +11,7 @@ from rich.style import Style
 import pystyle
 from pystyle import Colors, Colorate
 
-from ayandev import AyanDev
+from ayandev import Ayandev
 
 __CHANNEL_USERNAME__ = "CP_Ayan"
 __GROUP_USERNAME__   = "CP_Ayan_Chat"
