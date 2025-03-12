@@ -32,19 +32,9 @@ def gradient_text(text, colors):
 
 def banner(console):
     try:
-        os.system('cls' if os.name=='nt' else 'clear') 
-    brand_name =  " ██████╗██████╗ ███╗   ███╗ █████╗ ██╗   ██╗ █████╗ ███╗   ██╗\n"
-    brand_name += "██╔════╝██╔══██╗████╗ ████║██╔══██╗╚██╗ ██╔╝██╔══██╗████╗  ██║\n"
-    brand_name += "██║     ██████╔╝██╔████╔██║███████║ ╚████╔╝ ███████║██╔██╗ ██║\n"
-    brand_name += "██║     ██╔═══╝ ██║╚██╔╝██║██╔══██║  ╚██╔╝  ██╔══██║██║╚██╗██║\n"
-    brand_name += "╚██████╗██║     ██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║██║ ╚████║\n"
-    brand_name += " ╚═════╝╚═╝     ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝\n"
-    colors = [
-        "rgb(255,0,0)", "rgb(255,69,0)", "rgb(255,140,0)", "rgb(255,215,0)", "rgb(173,255,47)", 
-        "rgb(0,255,0)", "rgb(0,255,255)", "rgb(0,191,255)", "rgb(0,0,255)", "rgb(139,0,255)",
-        "rgb(255,0,255)"
-    ]
-        console.clear()
+       os.system('cls' if os.name=='nt' else 'clear') 
+       expect:
+         console.clear()
     console.print("[bold green][*] How to Buy[/bold green]: Buy The Credits From The Owner @ayanhere09.") 
     console.print("[bold green][*] Channel[/bold green]: Join The Channels @CP_Ayan & CP_Ayan_Chat.")
     console.print("[bold green][*] Description[/bold green]: Car Parking Multiplayer Hacking Tool.")
