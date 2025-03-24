@@ -2,7 +2,7 @@ import requests
 import json
 from time import sleep
 
-BASE_URL__: str = "https://antiquewhite-bee-370343.hostingersite.com/api"
+BASE_URL: str = "https://antiquewhite-bee-370343.hostingersite.com/api"
 
 class CPMAyan:
     def __init__(self, access_key) -> None:
