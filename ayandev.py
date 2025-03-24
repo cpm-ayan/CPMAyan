@@ -4,7 +4,7 @@ from time import sleep
 
 BASE_URL: str = "https://antiquewhite-bee-370343.hostingersite.com/api"
 
-class CPMAyan:
+class Ayandev:
     def __init__(self, access_key) -> None:
         self.auth_token = None
         self.access_key = access_key
