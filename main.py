@@ -49,7 +49,7 @@ def gradient_text(text, colors):
 
 def banner(console):
     os.system("cls" if os.name == "nt" else "clear")
-    brand_name = "Tool version is 0.3"
+    brand_name = "Please Join Our Channel @CP_Ayan"
 
     text = Text(brand_name, style="bold black")
 
@@ -419,7 +419,7 @@ if __name__ == "__main__":
             )
 
             console.print(
-                "[bold red]===============[bold white][ ᴋᴀʏᴢᴇɴɴ ][/bold white]===============[/bold red]"
+                "[bold red]===============[bold white][ Ayan ][/bold white]===============[/bold red]"
             )
 
             service = IntPrompt.ask(
