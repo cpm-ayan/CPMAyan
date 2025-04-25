@@ -7,7 +7,7 @@ import urllib.parse
 __ENDPOINT_URL__: str = "https//:dodgerblue-walrus-972474.hostingersite.com/api"
 
 
-class CPMCheats:
+class CarParkTool:
     def __init__(self, access_key) -> None:
         self.auth_token = None
         self.access_key = access_key
