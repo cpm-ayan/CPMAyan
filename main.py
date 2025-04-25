@@ -158,9 +158,7 @@ import datetime
 from carparktool import CarParkTool
 
 __CHANNEL_USERNAME__ = "CP_Ayan"
-__GROUP_USERNAME__ = "Cp_ayan_chat"
-__BOT_RICK_NAME__ = "@CPMAYANBOT"
-_CHEATS_NAME = "CPMAYAN"
+__GROUP_USERNAME__ = "CP_Ayan_chat"
 
 def signal_handler(sig, frame):
     print("\n Bye Bye...")
