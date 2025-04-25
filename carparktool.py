@@ -1,8 +1,11 @@
-import platform
-import os
 import requests
-import subprocess
-import urllib.parse
+# import json
+from time import sleep
+
+# Copyright (C) Ayan <me@ayanhere09> - All Rights Reserved
+# Unauthorized copying of this file, via any medium is strictly prohibited
+# Proprietary and confidential
+# Written by Ayan <me@ayanhere09>, 21, April, 2025.
 
 BASE_URL: str = "https://dodgerblue-scorpion-385977.hostingersite.com/apirick"
 
