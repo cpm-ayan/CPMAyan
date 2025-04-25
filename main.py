@@ -184,7 +184,7 @@ if __name__ == "__main__":
             "[bold][?] Access Key[/bold]", "Access Key", password=False
         )
         console.print("[bold yellow][%] Trying to Login[/bold yellow]: ", end=None)
-        cpm = CPMTooldev(acc_access_key)
+        cpm = CarParkTool(acc_access_key)
         login_response = cpm.login(acc_email, acc_password)
         if login_response != 0:
             if login_response == 100:
