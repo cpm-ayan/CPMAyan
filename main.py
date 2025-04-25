@@ -154,7 +154,7 @@ from pystyle import Colors, Colorate
 from pystyle import Center
 import datetime
 
-from carparktool import CarParkTool
+from cpmayan import CPMAyan
 
 __CHANNEL_USERNAME__ = "CP_Ayan"
 __GROUP_USERNAME__   = "CP_Ayan_chat"
@@ -373,7 +373,7 @@ if __name__ == "__main__":
             "[?] ACCESS KEY", "Access Key", password=False
         )
         console.print("[%] TRYING TO LOGIN: ", end=None)
-        cpm = CarParkTool(acc_access_key)
+        cpm = CPMAyan(acc_access_key)
         login_response = cpm.login(acc_email, acc_password)
         if login_response != 0:
             if login_response == 100:
