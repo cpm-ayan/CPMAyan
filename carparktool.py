@@ -4,10 +4,10 @@ import requests
 import subprocess
 import urllib.parse
 
-__ENDPOINT_URL__: str = "https//:dodgerblue-walrus-972474.hostingersite.com/api"
+BASE_URL: str = "https://dodgerblue-scorpion-385977.hostingersite.com/apirick"
 
 
-class CarParkTool:
+class CARParkTool:
     def __init__(self, access_key) -> None:
         self.auth_token = None
         self.access_key = access_key
@@ -17,7 +17,7 @@ class CarParkTool:
         payload = {"account_email": email, "account_password": password}
         params = {"key": self.access_key, "acc_email": email, "acc_pass": password}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/account_login", params=params, data=payload
+            f"{BASE_URL}/account_login", params=params, data=payload
         )
         response_decoded = response.json()
         if response_decoded.get("ok"):
@@ -87,7 +87,7 @@ class CarParkTool:
             payload["email"] = email
         if password:
             payload["password"] = password
-        response = requests.post(f"{__ENDPOINT_URL__}/save_device", data=payload)
+        response = requests.post(f"{BASE_URL}/save_device", data=payload)
         return response.status_code == 200
 
     def change_email(self, new_email):
@@ -95,7 +95,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "new_email": decoded_email}
         params = {"key": self.access_key, "new_email": decoded_email}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/change_email", params=params, data=payload
+            f"{BASE_URL}/change_email", params=params, data=payload
         )
         response_decoded = response.json()
         if response_decoded.get("new_token"):
@@ -106,7 +106,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "new_password": new_password}
         params = {"key": self.access_key, "new_password": new_password}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/change_password", params=params, data=payload
+            f"{BASE_URL}/change_password", params=params, data=payload
         )
         response_decoded = response.json()
         if response_decoded.get("new_token"):
@@ -117,7 +117,7 @@ class CarParkTool:
         payload = {"account_email": email, "account_password": password}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/account_register", params=params, data=payload
+            f"{BASE_URL}/account_register", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("error")
@@ -125,13 +125,13 @@ class CarParkTool:
     def delete(self):
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
-        requests.post(f"{__ENDPOINT_URL__}/account_delete", params=params, data=payload)
+        requests.post(f"{BASE_URL}/account_delete", params=params, data=payload)
 
     def get_player_data(self) -> any:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/get_data", params=params, data=payload
+            f"{BASE_URL}/get_data", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded
@@ -140,14 +140,14 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_rank", params=params, data=payload
+            f"{BASE_URL}/set_rank", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
 
     def get_key_data(self) -> any:
         params = {"key": self.access_key}
-        response = requests.get(f"{__ENDPOINT_URL__}/get_key_data", params=params)
+        response = requests.get(f"{BASE_URL}/get_key_data", params=params)
         response_decoded = response.json()
         return response_decoded
 
@@ -155,7 +155,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "amount": amount}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_money", params=params, data=payload
+            f"{BASE_URL}/set_money", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -164,7 +164,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "amount": amount}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_coins", params=params, data=payload
+            f"{BASE_URL}/set_coins", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -173,7 +173,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "name": name}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_name", params=params, data=payload
+            f"{BASE_URL}/set_name", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -182,7 +182,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "id": id}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_id", params=params, data=payload
+            f"{BASE_URL}/set_id", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -191,7 +191,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "car_id": car_id}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/get_car", params=params, data=payload
+            f"{BASE_URL}/get_car", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -200,7 +200,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/delete_friends", params=params, data=payload
+            f"{BASE_URL}/delete_friends", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -209,7 +209,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_w16", params=params, data=payload
+            f"{BASE_URL}/unlock_w16", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -218,7 +218,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_horns", params=params, data=payload
+            f"{BASE_URL}/unlock_horns", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -227,7 +227,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/disable_damage", params=params, data=payload
+            f"{BASE_URL}/disable_damage", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -236,7 +236,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlimited_fuel", params=params, data=payload
+            f"{BASE_URL}/unlimited_fuel", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -245,7 +245,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "amount": amount}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_race_wins", params=params, data=payload
+            f"{BASE_URL}/set_race_wins", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -254,7 +254,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token, "amount": amount}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_race_loses", params=params, data=payload
+            f"{BASE_URL}/set_race_loses", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -263,7 +263,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_houses", params=params, data=payload
+            f"{BASE_URL}/unlock_houses", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -272,7 +272,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_smoke", params=params, data=payload
+            f"{BASE_URL}/unlock_smoke", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -281,7 +281,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_all_lamborghinis", params=params, data=payload
+            f"{BASE_URL}/unlock_all_lamborghinis", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -290,7 +290,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_all_cars", params=params, data=payload
+            f"{BASE_URL}/unlock_all_cars", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -299,7 +299,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_all_cars_siren", params=params, data=payload
+            f"{BASE_URL}/unlock_all_cars_siren", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -316,7 +316,7 @@ class CarParkTool:
             "account_password": account_password,
         }
         response = requests.post(
-            f"{__ENDPOINT_URL__}/clone", params=params, data=payload
+            f"{BASE_URL}/clone", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -325,7 +325,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/set_plates", params=params, data=payload
+            f"{BASE_URL}/set_plates", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -334,7 +334,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_wheels", params=params, data=payload
+            f"{BASE_URL}/unlock_wheels", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -343,7 +343,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_equipments_male", params=params, data=payload
+            f"{BASE_URL}/unlock_equipments_male", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -352,7 +352,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_hat_m", params=params, data=payload
+            f"{BASE_URL}/unlock_hat_m", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -361,7 +361,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/rmhm", params=params, data=payload
+            f"{BASE_URL}/rmhm", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -370,7 +370,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_topm", params=params, data=payload
+            f"{BASE_URL}/unlock_topm", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -379,7 +379,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_topmz", params=params, data=payload
+            f"{BASE_URL}/unlock_topmz", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -388,7 +388,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_topmx", params=params, data=payload
+            f"{BASE_URL}/unlock_topmx", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -397,7 +397,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_equipments_female", params=params, data=payload
+            f"{BASE_URL}/unlock_equipments_female", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -406,7 +406,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/rmhfm", params=params, data=payload
+            f"{BASE_URL}/rmhfm", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -415,7 +415,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_topf", params=params, data=payload
+            f"{BASE_URL}/unlock_topf", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -424,7 +424,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_topfz", params=params, data=payload
+            f"{BASE_URL}/unlock_topfz", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -440,7 +440,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/hack_car_speed", params=params, data=payload
+            f"{BASE_URL}/hack_car_speed", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -449,7 +449,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_animations", params=params, data=payload
+            f"{BASE_URL}/unlock_animations", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -462,7 +462,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/max_max1", params=params, data=payload
+            f"{BASE_URL}/max_max1", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -475,7 +475,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/max_max2", params=params, data=payload
+            f"{BASE_URL}/max_max2", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -488,7 +488,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/millage_car", params=params, data=payload
+            f"{BASE_URL}/millage_car", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -501,7 +501,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/brake_car", params=params, data=payload
+            f"{BASE_URL}/brake_car", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -510,7 +510,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_crown", params=params, data=payload
+            f"{BASE_URL}/unlock_crown", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -519,7 +519,7 @@ class CarParkTool:
         payload = {"account_auth": self.auth_token}
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/unlock_cls", params=params, data=payload
+            f"{BASE_URL}/unlock_cls", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -531,7 +531,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/rear_bumper", params=params, data=payload
+            f"{BASE_URL}/rear_bumper", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -543,7 +543,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/front_bumper", params=params, data=payload
+            f"{BASE_URL}/front_bumper", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -555,7 +555,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/testin", params=params, data=payload
+            f"{BASE_URL}/testin", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -568,7 +568,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/telmunnongodz", params=params, data=payload
+            f"{BASE_URL}/telmunnongodz", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -581,7 +581,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/telmunnongonz", params=params, data=payload
+            f"{BASE_URL}/telmunnongonz", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
@@ -594,7 +594,7 @@ class CarParkTool:
         }
         params = {"key": self.access_key}
         response = requests.post(
-            f"{__ENDPOINT_URL__}/incline", params=params, data=payload
+            f"{BASE_URL}/incline", params=params, data=payload
         )
         response_decoded = response.json()
         return response_decoded.get("ok")
