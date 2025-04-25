@@ -6,8 +6,7 @@ import urllib.parse
 
 BASE_URL: str = "https://dodgerblue-scorpion-385977.hostingersite.com/apirick"
 
-
-class CARParkTool:
+class CarParkTool:
     def __init__(self, access_key) -> None:
         self.auth_token = None
         self.access_key = access_key
