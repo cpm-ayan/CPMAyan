@@ -1,5 +1,5 @@
 import requests
-# import json
+import json
 from time import sleep
 
 # Copyright (C) Ayan <me@ayanhere09> - All Rights Reserved
@@ -7,7 +7,7 @@ from time import sleep
 # Proprietary and confidential
 # Written by Ayan <me@ayanhere09>, 21, April, 2025.
 
-BASE_URL: str = "https://dodgerblue-scorpion-385977.hostingersite.com/apirick"
+BASE_URL: str = "https://dodgerblue-scorpion-385977.hostingersite.com/api"
 
 class CarParkTool:
     def __init__(self, access_key) -> None:
