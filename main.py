@@ -102,12 +102,12 @@ banner = r"""
 
 
 
-     ██████╗██████╗ ███╗   ███╗     █████╗ ██╗   ██╗ █████╗ ███╗   ██╗
-      ██╔════╝██╔══██╗████╗ ████║    ██╔══██╗╚██╗ ██╔╝██╔══██╗████╗  ██║
-     ██║     ██████╔╝██╔████╔██║    ███████║ ╚████╔╝ ███████║██╔██╗ ██║
-     ██║     ██╔═══╝ ██║╚██╔╝██║    ██╔══██║  ╚██╔╝  ██╔══██║██║╚██╗██║
-      ╚██████╗██║     ██║ ╚═╝ ██║    ██║  ██║   ██║   ██║  ██║██║ ╚████║
-      ╚═════╝╚═╝     ╚═╝     ╚═╝    ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝
+      ██████╗██████╗ ███╗   ███╗     █████╗  ██╗   ██╗   █████╗       ███╗   ██╗
+      ██╔════╝██╔══██╗████╗ ████║   ██╔══██╗ ╚██╗ ██╔╝ ██╔══██╗    ████╗  ██║
+     ██║     ██████╔╝██╔████╔██║    ███████║  ╚████╔╝  ███████║     ██ ╔██╗██║
+     ██║     ██╔═══╝ ██║╚██╔╝██║    ██╔══██║   ╚██╔╝    ██╔══██║     ██ ╚██╗██║
+      ╚██████╗██║     ██║ ╚═╝ ██║    ██║  ██║    ██║     ██║  ██║     ██║ ╚████║
+      ╚═════╝╚═╝     ╚═╝     ╚═╝    ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝     ╚═══╝
                                                                   
 
  
@@ -154,11 +154,10 @@ from pystyle import Colors, Colorate
 from pystyle import Center
 import datetime
 
-
 from carparktool import CarParkTool
 
 __CHANNEL_USERNAME__ = "CP_Ayan"
-__GROUP_USERNAME__ = "CP_Ayan_chat"
+__GROUP_USERNAME__   = "CP_Ayan_chat"
 
 def signal_handler(sig, frame):
     print("\n Bye Bye...")
@@ -192,7 +191,7 @@ def gradient_text(text, colors):
 
 def banner(console):
     os.system("cls" if os.name == "nt" else "clear")
-    brand_name = figlet_format('CPMAyan', font='starwars') 
+    brand_name = figlet_format('CPMAyan', font='bloody') 
     colors = [
         "rgb(255,0,0)",  # Vermelho
         "rgb(255,51,0)",  # Vermelho-alaranjado
@@ -208,7 +207,7 @@ def banner(console):
         Colorate.Horizontal(
             Colors.yellow_to_red,
             Center.XCenter(
-                "─════════════════════════════[ IMPORTANT  ]════════════════════════════─"
+                "─════════════════════════════[ READ IT FIRST ]════════════════════════════─"
             ),
         )
     )
