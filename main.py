@@ -429,7 +429,7 @@ if __name__ == "__main__":
             )
 
             console.print(
-                "[bold red]===============[bold white][ ᴋᴀʏᴢᴇɴɴ ][/bold white]===============[/bold red]"
+                "[bold red]===============[bold white][ Ayan ][/bold white]===============[/bold red]"
             )
 
             if service == 0:  # Exit
