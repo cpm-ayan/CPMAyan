@@ -1,5 +1,5 @@
-# Rick Developer Solutions Encrypt
-# Copyright © Rick Developer Solutions
+# Ayan Developer Solutions Encrypt
+# Copyright © Ayan Developer Solutions
 # 
 # MIT License
 # 
