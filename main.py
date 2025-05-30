@@ -365,7 +365,7 @@ if __name__ == "__main__":
                 if status == 0:
                     console.print("[bold cyan] SUCCESSFUL[/bold cyan]")
                     console.print("[bold cyan] '======================================[/bold cyan]")
-                    console.print("[bold cyan] f'INFO: In order to tweak this account with Telmun[/bold cyan]")
+                    console.print("[bold cyan] f'INFO: In order to tweak this account with Ayan[/bold cyan]")
                     console.print("[bold cyan] 'you most sign-in to the game using this account[/bold cyan]")
                     sleep(2)
                     continue
